@@ -1,0 +1,75 @@
+{% extends 'EB/base.html' %}
+
+{% block content %}
+
+<div class="projects-section">
+    <h4 class="head">Eldorado Brougham<span class="line"></span></h4>
+</div>
+
+
+<div class="row">
+    <div class="col-md-10 col-lg-10 col-sm-10 text-center">
+		<ul class="pagination pagination-centered">
+
+	    <li><a href="?page=1"><<</a></li>
+	  	
+		{% if cars.has_previous %}
+	    	<li><a href="?page={{ cars.previous_page_number }}"><</a></li>
+	  	{% endif %}
+
+		{% for pg in cars.paginator.page_range %}
+			{% if pg <= maxpage and pg >= minpage and pg != cars.number %}
+		      <li> <a href="?page={{ pg }}">{{pg}}</a></li>
+		   	{% elif pg == cars.number %}
+		      <li> <a href="?page={{ pg }}">{{pg}}</a></li>
+		   	{% endif %}
+		    
+		{% endfor %}
+
+		{% if cars.has_next %}
+		    <li><a href="?page={{ cars.next_page_number }}">></a></li>
+		{% endif %}
+
+		<li><a href="?page={{ endindex }}">>></a></li>
+
+		</ul>
+	</div>
+
+	<div class="col-md-2 col-lg-2 col-sm-2 text-center input-group">
+		<input type="number" class="form-control" data-bind="value:replyNumber" placeholder="Go to Car Num.. value="${item.value}"">
+		<span class="input-group-btn">
+	    	<button class="btn btn-default" type="button">Go!</button>
+		</span>
+	</div>
+
+</div>
+
+	{% for car in cars.object_list %}
+
+    <div class = "row">
+		<h1>Eldorado Brougham <small>{{car.title}}</small></h1>
+	</div>
+
+	<br>
+
+	<div class = "row">
+		<div class = "col-lg-6 col-md-6 col-sm-6">
+			<style>.embed-container { position:relative; margin:0 auto; max-width:600px; padding-bottom:98%; padding-top:30px; height:0; overflow:hidden; max-width:100%; height:auto; } .embed-container iframe, .embed-container object, .embed-container embed { position:absolute; top:0; left:0; width:100%; height:100%; border:none; }</style>
+			<div class="embed-container"><iframe src="http://itpfall2015.jalbum.net/cars/"width="500" height="450" frameborder="0" allowfullscreen allowtransparency></iframe>
+			</div>
+		</div>	
+		<div class = "col-lg-6 col-md-6 col-sm-6">
+			<p class="text-justify">{{car.content}}</p>
+		</div>
+	</div>
+
+	{% if cars.has_previous %}
+		<a class="carousel-control left" href="?page={{ cars.previous_page_number }}"><span class="glyphicon glyphicon-chevron-left text-grey"></span></a> 
+	{% endif %}
+	{% if cars.has_next %}
+  		<a class="carousel-control right" href="?page={{ cars.next_page_number }}"><span class="glyphicon glyphicon-chevron-right text-grey"></span></a>
+  	{% endif %}
+
+	{% endfor %}
+
+  {% endblock %}
