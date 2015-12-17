@@ -1,0 +1,69 @@
+{% extends 'EB/base.html' %}
+
+{% block content %}
+
+<div class="projects-section">
+    <h4 class="head">Eldorado Brougham<span class="line"></span></h4>
+</div>
+
+<div class="row">
+    <div class="col-md-10 col-lg-10 col-sm-10 text-center">
+		<ul class="pagination pagination-centered">
+
+	    <li><a href="?page=1"><<</a></li>
+	  	
+		{% if updates.has_previous %}
+	    	<li><a href="?page={{ cars.previous_page_number }}"><</a></li>
+	  	{% endif %}
+
+		{% for pg in updates.paginator.page_range %}
+			{% if pg <= maxpage and pg >= minpage and pg != updates.number %}
+		      <li> <a href="?page={{ pg }}">{{pg}}</a></li>
+		   	{% elif pg == updates.number %}
+		      <li> <a href="?page={{ pg }}">{{pg}}</a></li>
+		   	{% endif %}
+		    
+		{% endfor %}
+
+		{% if updates.has_next %}
+		    <li><a href="?page={{ updates.next_page_number }}">></a></li>
+		{% endif %}
+
+		<li><a href="?page={{ endindex }}">>></a></li>
+
+		</ul>
+	</div>
+
+</div>
+
+	{% for update in updates.object_list %}
+
+    <div class = "row">
+		<h1>Eldorado Brougham <small>{{car.title}}</small></h1>
+	</div>
+
+	<br>
+
+	<div class = "row">
+		<div class = "col-lg-6 col-md-6 col-sm-6">
+			<style>.embed-container { position:relative; margin:0 auto; max-width:600px; padding-bottom:98%; padding-top:30px; height:0; overflow:hidden; max-width:100%; height:auto; } .embed-container iframe, .embed-container object, .embed-container embed { position:absolute; top:0; left:0; width:100%; height:100%; border:none; }</style>
+			<div class="embed-container"><iframe src="http://newcadillacdatabase.org/final_output/Eldorado_Brougham/1957/C2/index.html"width="500" height="450" frameborder="0" allowfullscreen allowtransparency></iframe>
+			</div>
+		</div>
+
+		<div class = "col-lg-6 col-md-6 col-sm-6">
+			<p class="text-justify">{{update.content}}</p>
+		</div>
+	</div>
+
+	{% if updates.has_previous %}
+		<a class="carousel-control left" href="?page={{ cars.previous_page_number }}"><span class="glyphicon glyphicon-chevron-left text-grey"></span></a> 
+	{% endif %}
+
+	{% if updates.has_next %}
+  		<a class="carousel-control right" href="?page={{ cars.next_page_number }}"><span class="glyphicon glyphicon-chevron-right text-grey"></span></a>
+  	{% endif %}
+
+	{% endfor %}
+
+  {% endblock %}

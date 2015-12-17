@@ -1,7 +1,8 @@
 {% extends 'EB/base.html' %}
 
 {% block title %} Home {% endblock %}
-<!-- Portfolio Item Row -->
+
+
 {% block content %} 
 <div class="row">
 
@@ -13,7 +14,7 @@
     	<br>
         <h2> The Cadillac Database © </h2>
         <hr>
-        <p class="text-justify">The Cadillac Database© is a non-commercial, non-profit, 100% ad-free Internet resource for the old-car hobby. It is a holding of the Museum & Research Center of the Cadillac & La Salle Club, Inc. The facts, figures and images included herein attempt to retrace the history and styling of Cadillac-made automobiles from the time the Cadillac Automobile Co. was founded, in 1902. It was compiled by Yann Saunders, a member of the Cadillac & La Salle Club, Inc., the Society of Automotive Historians and the Classic Car Club of America.</p>
+        <p class="text-justify"> {{ chapterheading.description }}</p>
         <br>
         <div class="row">
             <div class = "col-xs-6 col-lg-6">
@@ -31,28 +32,15 @@
 
 <div class="well text-center">Fantastic Cadillac Resource Goes Here, the Book of Cadillac!</div>
 
-<div class="row">
 
+<div class="row">
+  {% for chapter in chapters %}
     <div class="col-xs-3 col-lg-3">
-      <h4>Preface</h4>
-      <p>By Z. Taylor Vinson, President, Society of Automotive Historians</p>
-      <p><a class="btn btn-default" href="#" role="button">Find out more &raquo;</a></p>
+      <h4>{{ chapter.chaptername}}</h4>
+      <p>{{ chapter.description }}</p>
+      <p><a class="btn btn-default" href="{{chapter.chaptername|slugify}}" role="button">Find out more &raquo;</a></p>
     </div> 
-    <div class="col-xs-3 col-lg-3">
-      <h4>Historical Information</h4>
-      <p>Pages put in order according to historical years</p>
-      <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-    </div>
-    <div class="col-xs-3 col-lg-3">
-      <h4>Historical Information</h4>
-      <p>Pages put in order according to historical years</p>
-      <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-    </div>
-    <div class="col-xs-3 col-lg-3">
-      <h4>Historical Information</h4>
-      <p>Pages put in order according to historical years</p>
-      <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-    </div>
+  {% endfor %}
 </div>
 
 <br>

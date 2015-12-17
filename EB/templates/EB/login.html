@@ -1,0 +1,24 @@
+{% extends 'EB/base.html' %}
+
+{% block title %} Login {% endblock %}
+
+{% block content %} 
+
+<div class="col-lg-4 col-offset-4 centered">
+
+<form class="form-signin" action="login/" method="post" id="login-form">{% csrf_token %}
+  <h2 class="form-signin-heading">{{ message }}</h2>
+  <label for="inputEmail" class="sr-only">Email address</label>
+  <input type="email" name="username" id="id_username" class="form-control" placeholder="Email address" required autofocus>
+  <label for="inputPassword" class="sr-only">Password</label>
+  <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" value="remember-me"> Remember me
+    </label>
+  </div>
+  <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+</form>
+
+</div>
+{% endblock %}

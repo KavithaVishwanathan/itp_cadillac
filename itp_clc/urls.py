@@ -16,12 +16,23 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.views.generic.edit import CreateView
+from django.contrib.auth.forms import UserCreationForm
 from EB import views
 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$',views.home),
-    url(r'^EB/$',include('EB.urls')),
-    url(r'^survivors$',views.survivors),
+    url(r'^login/$', views.login),
+    url(r'^register/$', CreateView.as_view(
+            template_name='EB/register.html',
+            form_class=UserCreationForm,
+            success_url='/'
+    )),
+    url('^accounts/', include('django.contrib.auth.urls')),
+    url(r'^historical-information$',views.historical),
+    url(r'^historical-information/eldorado-brougham/',include('EB.urls')),
+    url(r'^survivors-registory$',views.survivors),
+    url(r'^survivors-registory/eldorado-brougham/',include('EB.urls')),
 ]

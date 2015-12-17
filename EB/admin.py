@@ -1,3 +1,7 @@
 from django.contrib import admin
+from .models import Cardetails, Chapters, Cardetailsupdate
 
-# Register your models here.
+admin.site.register(Cardetails)
+admin.site.register(Chapters)
+admin.site.register(Cardetailsupdate)
+

@@ -2,10 +2,14 @@
 
 {% block content %}
 
-<div class="projects-section">
-    <h4 class="head">Eldorado Brougham<span class="line"></span></h4>
+<div class="row">
+    <ul class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li><a href="">{{ chapterheading.superchapterid.superchapterid.chaptername }}</a></li>
+        <li><a href="">{{ chapterheading.superchapterid.chaptername }}</a></li>
+        <li><a href="active">{{ chapterheading.chaptername }}</a></li>
+    </ul>
 </div>
-
 
 <div class="row">
     <div class="col-md-10 col-lg-10 col-sm-10 text-center">
@@ -53,13 +57,21 @@
 	<br>
 
 	<div class = "row">
-		<div class = "col-lg-6 col-md-6 col-sm-6">
+		{% if car.jalbumlink != NULL %}
+		<div class = "col-lg-6 col-md-6 col-sm-6" style = "height: 580px">
 			<style>.embed-container { position:relative; margin:0 auto; max-width:600px; padding-bottom:98%; padding-top:30px; height:0; overflow:hidden; max-width:100%; height:auto; } .embed-container iframe, .embed-container object, .embed-container embed { position:absolute; top:0; left:0; width:100%; height:100%; border:none; }</style>
-			<div class="embed-container"><iframe src="http://itpfall2015.jalbum.net/cars/"width="500" height="450" frameborder="0" allowfullscreen allowtransparency></iframe>
+			<div class="embed-container"><iframe src="http://newcadillacdatabase.org/jalbum/Eldorado_Brougham/1957/C2/index.html"width="500" height="450" frameborder="0" allowfullscreen allowtransparency></iframe>
 			</div>
-		</div>	
-		<div class = "col-lg-6 col-md-6 col-sm-6">
+		</div>
+		{% endif %}
+
+		<div class = "col-lg-6 col-md-6 col-sm-6" style = "height: 580px">
 			<p class="text-justify">{{car.content}}</p>
+			
+			{% if updateboolean %}
+				<a target="_blank" href = "carupdate/{{car.carnum}}/?page=1" class="btn btn-default" type="button">View Updates</a>
+			{% endif %}
+
 		</div>
 	</div>
 
