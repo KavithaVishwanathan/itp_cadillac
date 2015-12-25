@@ -1,12 +1,92 @@
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render, render_to_response, redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger, InvalidPage
 from django.http import HttpResponse, HttpResponseRedirect
-from django.template import RequestContext
+from django.template import RequestContext, Context
 from django.core.exceptions import ObjectDoesNotExist
-from django.contrib.auth import (login as auth_login,  authenticate)
+from django.contrib.auth import authenticate, login, logout
 from django.core.urlresolvers import reverse
-from .models import Cardetails, Chapters, Cardetailsupdate, Historicalinformation
+from django.contrib.auth.models import User
+from django.views.decorators.csrf import csrf_protect
+from django.template.loader import get_template
+from django.core.mail import EmailMessage
+from .models import AuthUser, Cardetails, Chapters, Cardetailsupdate, Historicalinformation, HistoricalImages
+from .forms import RegistrationForm, ContactForm
 
+def register(request):
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            user = User.objects.create_user(
+            username=form.cleaned_data['username'],
+            password=form.cleaned_data['password1'],
+            email=form.cleaned_data['email']
+            )
+            #login(request, user)
+            return redirect('/register/success/')
+    else:
+        form = RegistrationForm()
+    variables = RequestContext(request, {'form': form})
+ 
+    return render_to_response('EB/register.html',variables,)
+
+def success(request):
+    return render_to_response('EB/success.html',)
+
+def contact(request):
+    form_class = ContactForm
+
+    if request.method == 'POST':
+        form = form_class(data=request.POST)
+
+        if form.is_valid():
+            contact_name = request.POST.get('contact_name', '')
+            contact_email = request.POST.get('contact_email', '')
+            form_content = request.POST.get('content', '')
+
+            # Email the profile with the contact information
+            template = get_template('EB/contact_template.txt')
+            context = Context({
+                'contact_name': contact_name,
+                'contact_email': contact_email,
+                'form_content': form_content,
+            })
+            content = template.render(context)
+
+            email = EmailMessage(
+                "New contact form submission",
+                content,
+                "Your website" +'<cadillacdatabase.org>',
+                ['kv668@nyu.edu'],
+                headers = {'Reply-To': contact_email }
+            )
+            email.send()
+            return redirect('contact')
+    
+    return render(request, 'EB/contact.html', {
+        'form': form_class,
+    })
+
+def login_user(request):
+    state = "Please log in below..."
+    username = password = ''
+    
+    if request.POST:
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                return redirect('landing/', {'user':user})
+                    #return render_to_response('landing.html',{'user':user},context_instance=RequestContext(request))
+                #state = "You're successfully logged in!"
+            else:
+                state = "Your account is not active, please contact the site admin."
+        else:
+            state = "Your username and/or password were incorrect."
+
+    return render_to_response('EB/login.html',{'state':state, 'username': username, 'password':password},context_instance=RequestContext(request))
 
 def login(request):
     _message = 'Please sign in'
@@ -45,9 +125,15 @@ def historical(requests):
     return render_to_response('EB/chapter_template.html', {'chapters':chapters, 'chapterheading':chapterheading});
 
 def ebparts(requests):
-    chapters = Chapters.objects.filter(superchapterid = 10).order_by('chapterid')
-    chapterheading = Chapters.objects.get(pk = 3)
+    chapters = Chapters.objects.filter(superchapterid = 10).order_by('chaptername')
+    chapterheading = Chapters.objects.get(pk = 10)
+    superchapheading = chapterheading.superchapterid.chaptername
     return render_to_response('EB/chap_no_image.html', {'chapters':chapters, 'chapterheading':chapterheading});
+
+def ebyear(requests):
+    chapters = Chapters.objects.filter(superchapterid = 46).order_by('chapterid')
+    chapterheading = Chapters.objects.get(pk = 46)
+    return render_to_response('EB/chapter_template.html', {'chapters':chapters, 'chapterheading':chapterheading});
 	
 
 def CarPage(request,carnum):		
@@ -55,14 +141,20 @@ def CarPage(request,carnum):
 	return render_to_response('cars/carpage.html',{'car':car});
 	#return render_to_response('cars/carpage.html',{'cars':cars});
 
-def historicaltemplate(request, sectionorder):        
+def historicaltemplate(request, sectionorder):
+    chapterheading = Chapters.objects.get(pk = 36)
+    totsectionnum = Historicalinformation.objects.all().count()   
     section = Historicalinformation.objects.get(sectionorder = sectionorder)
-    return render_to_response('historicaltemplate.html', {'section': section});
+    section_fk = section.sectionid
+    sectionimages = HistoricalImages.objects.filter(sectionid = section_fk)
 
-def cardisplay(request):
-    cars_list = Cardetails.objects.all().order_by('carnum')
+    return render_to_response('EB/historicaltemplate.html', {'section': section, 'chapterheading':chapterheading, 'sectionimages':sectionimages, 'totsectionnum':totsectionnum});
+
+def cardisplay(request,year):
+    cars_list = Cardetails.objects.filter(caryear=year).order_by('carnum')
     endindex = Cardetails.objects.count()
-    chapterheading = Chapters.objects.get(pk =46)
+    chapid = 'Year '+ str(year)
+    chapterheading = Chapters.objects.get(chaptername = chapid)
 
 
     paginator = Paginator(cars_list, 1)

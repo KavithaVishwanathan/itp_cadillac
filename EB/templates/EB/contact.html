@@ -1,8 +1,15 @@
-{ % extends EB.base.html}
+{% extends 'EB/base.html' %}
+
+{% block title %}Contact{% endblock %}
 
 {% block content %}
 
-<address>
-    <strong>Contact Email:</strong>   <a>CadillacDatabase@gmail.com</a><br />
-</address>
+<h1>Contact</h1>
 
+<form role="form" action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+</form>
+
+{% endblock %}

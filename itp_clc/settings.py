@@ -41,10 +41,10 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE_CLASSES = [
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -78,10 +78,10 @@ WSGI_APPLICATION = 'itp_clc.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ITP_2015',
-        'USER':'itp2015',
-        'PASSWORD':'cadillac2015',
-        'HOST':'198.71.225.53',
+        'NAME': 'newcadillac',
+        'USER':'mycadillac',
+        'PASSWORD':'mycadillac',
+        'HOST':'107.180.51.42',
         'PORT':'3306'
     }
 }
@@ -105,6 +105,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' 
+DEFAULT_FROM_EMAIL = 'testing@example.com'
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_USE_TLS = False 
+EMAIL_PORT = 1025
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/

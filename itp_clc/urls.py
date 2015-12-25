@@ -24,12 +24,10 @@ from EB import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$',views.home),
-    url(r'^login/$', views.login),
-    url(r'^register/$', CreateView.as_view(
-            template_name='EB/register.html',
-            form_class=UserCreationForm,
-            success_url='/'
-    )),
+    url(r'^login/$', views.login_user),
+    url(r'^register/$', views.register),
+    url(r'^contact/$', views.contact, name='contact'),
+    url(r'^register/success/$', views.success),
     url('^accounts/', include('django.contrib.auth.urls')),
     url(r'^historical-information$',views.historical),
     url(r'^historical-information/eldorado-brougham/',include('EB.urls')),

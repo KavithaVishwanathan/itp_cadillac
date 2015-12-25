@@ -5,8 +5,8 @@
 <div class="row">
     <ul class="breadcrumb">
         <li><a href="/">Home</a></li>
-        <li><a href="">{{ chapterheading.superchapterid.superchapterid.chaptername }}</a></li>
-        <li><a href="">{{ chapterheading.superchapterid.chaptername }}</a></li>
+        <li><a href="/{{chapterheading.superchapterid.superchapterid.chaptername|slugify}}">{{ chapterheading.superchapterid.superchapterid.chaptername }}</a></li>
+        <li><a href="/{{chapterheading.superchapterid.superchapterid.chaptername|slugify}}/{{chapterheading.superchapterid.chaptername|slugify}}">{{ chapterheading.superchapterid.chaptername }}</a></li>
         <li><a href="active">{{ chapterheading.chaptername }}</a></li>
     </ul>
 </div>
@@ -22,6 +22,7 @@
 	  	{% endif %}
 
 		{% for pg in cars.paginator.page_range %}
+			
 			{% if pg <= maxpage and pg >= minpage and pg != cars.number %}
 		      <li> <a href="?page={{ pg }}">{{pg}}</a></li>
 		   	{% elif pg == cars.number %}
@@ -44,28 +45,27 @@
 		<span class="input-group-btn">
 	    	<button class="btn btn-default" type="button">Go!</button>
 		</span>
+		<input type="number" class="form-control" data-bind="value:replyNumber" placeholder="Go to Year value="${item.value}"">
+		<span class="input-group-btn">
+	    	<button class="btn btn-default" type="button">Go!</button>
+		</span>
 	</div>
 
 </div>
 
 	{% for car in cars.object_list %}
 
-    <div class = "row">
-		<h1>Eldorado Brougham <small>{{car.title}}</small></h1>
-	</div>
-
-	<br>
-
 	<div class = "row">
 		{% if car.jalbumlink != NULL %}
 		<div class = "col-lg-6 col-md-6 col-sm-6" style = "height: 580px">
 			<style>.embed-container { position:relative; margin:0 auto; max-width:600px; padding-bottom:98%; padding-top:30px; height:0; overflow:hidden; max-width:100%; height:auto; } .embed-container iframe, .embed-container object, .embed-container embed { position:absolute; top:0; left:0; width:100%; height:100%; border:none; }</style>
-			<div class="embed-container"><iframe src="http://newcadillacdatabase.org/jalbum/Eldorado_Brougham/1957/C2/index.html"width="500" height="450" frameborder="0" allowfullscreen allowtransparency></iframe>
+			<div class="embed-container"><iframe src="http://newcadillacdatabase.org/jalbum/Eldorado_Brougham/1957/C2/index.html" width="500" height="450" frameborder="0" allowfullscreen allowtransparency></iframe>
 			</div>
 		</div>
 		{% endif %}
 
-		<div class = "col-lg-6 col-md-6 col-sm-6" style = "height: 580px">
+		<div class = "col-lg-6 col-md-6 col-sm-6 empty-space">
+			<h2>{{car.title}}</h2>
 			<p class="text-justify">{{car.content}}</p>
 			
 			{% if updateboolean %}

@@ -7,9 +7,15 @@
 <div class="row">
         <ul class="breadcrumb">
             <li><a href="/">Home</a></li>
+            {% if heading in chapterheading.superchapterid %}
+            <li><a href="">{{ heading.superchapterid.chaptername }}</a></li>
+            {% endif %}
             <li><a class="active">{{ chapterheading.chaptername }}</a></li>
         </ul>
 </div>
+
+{% if chapterheading.introduction %} 
+{% endif %}
 
 <div class="row">
     {% for chapter in chapters %}
