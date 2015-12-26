@@ -32,6 +32,11 @@ def register(request):
 def success(request):
     return render_to_response('EB/success.html',)
 
+def logout_page(request):
+    logout(request)
+    return redirect('/')
+    #return render_to_response('EB/homepage.html',context_instance=RequestContext(request))
+
 def contact(request):
     form_class = ContactForm
 
@@ -66,51 +71,12 @@ def contact(request):
         'form': form_class,
     })
 
-def login_user(request):
-    state = "Please log in below..."
-    username = password = ''
-    
-    if request.POST:
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-                return redirect('landing/', {'user':user})
-                    #return render_to_response('landing.html',{'user':user},context_instance=RequestContext(request))
-                #state = "You're successfully logged in!"
-            else:
-                state = "Your account is not active, please contact the site admin."
-        else:
-            state = "Your username and/or password were incorrect."
 
-    return render_to_response('EB/login.html',{'state':state, 'username': username, 'password':password},context_instance=RequestContext(request))
-
-def login(request):
-    _message = 'Please sign in'
-    if request.method == 'POST':
-        _username = request.POST['username']
-        _password = request.POST['password']
-        user = authenticate(username=_username, password=_password)
-        if user is not None:
-            if user.is_active:
-                auth_login(request, user)
-                return HttpResponseRedirect(reverse('home'))
-            else:
-                _message = 'Your account is not activated'
-        else:
-            _message = 'Invalid login, please try again.'
-    context = {'message': _message}
-    return render(request, 'EB/login.html', context)
-
-
-def home(requests):
+def home(request):
     chapters = Chapters.objects.filter(superchapterid = 1)
     chapterheading = Chapters.objects.get(pk = 1)
 
-    return render_to_response('EB/homepage.html', {'chapters':chapters, 'chapterheading':chapterheading});
+    return render_to_response('EB/homepage.html', {'chapters':chapters, 'chapterheading':chapterheading, 'user': request.user});
 
 def survivors(requests):
     chapters = Chapters.objects.filter(superchapterid = 4)
@@ -220,4 +186,6 @@ def carupdates(request, carnum):
 
     return render_to_response('EB/carupdate_template.html', { 'updates' : updates, 'endindex' : endindex, 'minpage':minpage, 'maxpage':maxpage}, context_instance=RequestContext(request));
 
-
+def sample(request):
+    user = request.user
+    return render_to_response('EB/sample.html',{'user':user});

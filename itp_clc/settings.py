@@ -86,6 +86,8 @@ DATABASES = {
     }
 }
 
+# URL of the login page.
+LOGIN_URL = '/login/'
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
@@ -117,7 +119,7 @@ EMAIL_PORT = 1025
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'EST'
 
 USE_I18N = True
 

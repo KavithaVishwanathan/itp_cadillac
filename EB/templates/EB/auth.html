@@ -24,6 +24,7 @@
             {% if next %}
             <input type="hidden" name="next" value="{{ next }}" />
             {% endif %}
+            {{state}}
             <div class="form-group">
               <input type="text" class="form-control input-lg" name = "username" placeholder="Username" value="{{ username}}"/>
             </div>

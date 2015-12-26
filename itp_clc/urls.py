@@ -18,17 +18,21 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.views.generic.edit import CreateView
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.views import login
+from django.contrib.auth.views import logout
 from EB import views
 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$',views.home),
-    url(r'^login/$', views.login_user),
+    url(r'^login/$', 'django.contrib.auth.views.login'),
+    url(r'^logout/$', views.logout_page),
+    url(r'^sample/$', views.sample),
     url(r'^register/$', views.register),
     url(r'^contact/$', views.contact, name='contact'),
     url(r'^register/success/$', views.success),
-    url('^accounts/', include('django.contrib.auth.urls')),
+    url(r'^accounts/', include('django.contrib.auth.urls')),
     url(r'^historical-information$',views.historical),
     url(r'^historical-information/eldorado-brougham/',include('EB.urls')),
     url(r'^survivors-registory$',views.survivors),

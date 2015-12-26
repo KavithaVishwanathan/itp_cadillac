@@ -12,7 +12,7 @@
 </div>
 
 <div class="row">
-    <div class="col-md-10 col-lg-10 col-sm-10 text-center">
+    <div class="col-md-8 col-lg-8 col-sm-8 text-center">
 		<ul class="pagination pagination-centered">
 
 	    <li><a href="?page=1"><<</a></li>
@@ -40,16 +40,19 @@
 		</ul>
 	</div>
 
-	<div class="col-md-2 col-lg-2 col-sm-2 text-center input-group">
+	<div class="col-md-2 col-lg-2 col-sm-2">
 		<input type="number" class="form-control" data-bind="value:replyNumber" placeholder="Go to Car Num.. value="${item.value}"">
 		<span class="input-group-btn">
 	    	<button class="btn btn-default" type="button">Go!</button>
 		</span>
-		<input type="number" class="form-control" data-bind="value:replyNumber" placeholder="Go to Year value="${item.value}"">
-		<span class="input-group-btn">
-	    	<button class="btn btn-default" type="button">Go!</button>
-		</span>
 	</div>
+	<div class="dropdown col-md-2 col-lg-2 col-sm-2">
+        <a href="#" data-toggle="dropdown" class="dropdown-toggle" type="button">Dropdown <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+        </ul>
+    </div>
 
 </div>
 
