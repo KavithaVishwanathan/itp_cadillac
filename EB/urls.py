@@ -21,9 +21,9 @@ from EB import views
 urlpatterns = [
     # url(r'^$',views.Home),
     #url(r'(?P<carnum>[0-9]+)$',views.CarPage),
-    url(r'^part-13a/carupdate/(?P<carnum>[0-9]+)',views.carupdates, name = 'carupdates'),
-    url(r'^part-13a/year-(?P<year>[0-9]+)/',views.cardisplay, name = 'cardisplay'),
-    url(r'^part-13a/$',views.ebyear, name = 'ebyear'),
+    url(r'^part-13a-best-of-the-brougham-breed/carupdate/(?P<carnum>[0-9]+)',views.carupdates, name = 'carupdates'),
+    url(r'^part-13a-best-of-the-brougham-breed/year-(?P<year>[0-9]+)/',views.cardisplay, name = 'cardisplay'),
+    url(r'^part-13a-best-of-the-brougham-breed/$',views.ebyear, name = 'ebyear'),
     url(r'^part-2/(?P<sectionorder>[0-9]+)$',views.historicaltemplate, name = 'historicaltemplate'),
     url(r'^$',views.ebparts, name = 'ebparts'),
 ]

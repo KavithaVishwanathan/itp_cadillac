@@ -5,8 +5,8 @@
 <div class="row">
     <ul class="breadcrumb">
         <li><a href="/">Home</a></li>
-        <li><a href="/{{chapterheading.superchapterid.superchapterid.chaptername|slugify}}">{{ chapterheading.superchapterid.superchapterid.chaptername }}</a></li>
-        <li><a href="/{{chapterheading.superchapterid.superchapterid.chaptername|slugify}}/{{chapterheading.superchapterid.chaptername|slugify}}">{{ chapterheading.superchapterid.chaptername }}</a></li>
+        <li><a href="/{{chapterheading.superchapterid.superchapterid.superchapterid.chaptername|slugify}}/{{chapterheading.superchapterid.superchapterid.chaptername|slugify}}">{{ chapterheading.superchapterid.superchapterid.chaptername }}</a></li>
+        <li><a href="/{{chapterheading.superchapterid.superchapterid.superchapterid.chaptername|slugify}}/{{chapterheading.superchapterid.superchapterid.chaptername|slugify}}/{{chapterheading.superchapterid.chaptername|slugify}}">{{ chapterheading.superchapterid.chaptername }}</a></li>
         <li><a href="active">{{ chapterheading.chaptername }}</a></li>
     </ul>
 </div>
@@ -39,20 +39,20 @@
 
 		</ul>
 	</div>
-
-	<div class="col-md-2 col-lg-2 col-sm-2">
-		<input type="number" class="form-control" data-bind="value:replyNumber" placeholder="Go to Car Num.. value="${item.value}"">
-		<span class="input-group-btn">
-	    	<button class="btn btn-default" type="button">Go!</button>
-		</span>
-	</div>
-	<div class="dropdown col-md-2 col-lg-2 col-sm-2">
-        <a href="#" data-toggle="dropdown" class="dropdown-toggle" type="button">Dropdown <b class="caret"></b></a>
+	<div class="dropdown col-md-1 col-lg-1 col-sm-1" style="padding-top: 25px">
+        <a href="#" data-toggle="dropdown" class="dropdown-toggle" type="button">Year <b class="caret"></b></a>
         <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
+            <li><a href="/historical-information/eldorado-brougham/part-13a-best-of-the-brougham-breed/year-1957">1957</a></li>
+            <li><a href="/historical-information/eldorado-brougham/part-13a/year-1958">1958</a></li>
+            <li><a href="/historical-information/eldorado-brougham/part-13a-best-of-the-brougham-breed/year-1959">1959</a></li>
         </ul>
     </div>
+	<div class="col-md-2 col-lg-2 col-sm-2" style="padding-top: 25px">
+		<input type="number" class="form-control" data-bind="value:replyNumber" id= "pg_field" placeholder="Go to Car Num.." value="${item.value}">
+	</div>
+	<div class="col-md-1 col-lg-1 col-sm-1" style="padding-top: 25px">
+		<a href='' onclick="this.href='?page='+document.getElementById('pg_field').value" class="btn btn-default" type="button">Go!</a>
+	</div>
 
 </div>
 
