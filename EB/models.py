@@ -27,7 +27,7 @@ class Chapters(models.Model):
         db_table = 'Chapters'
 
 class Cardetails(models.Model):
-    carid = models.IntegerField(db_column ='id', primary_key=True)
+    carid = models.CharField(db_column ='id', primary_key=True)
     caryear = models.IntegerField(db_column='CarYear')  # Field name made lowercase.
     carnum = models.IntegerField(db_column='CarNum')  # Field name made lowercase.
     title = models.CharField(db_column='Title', max_length=30, blank=True, null=True)  # Field name made lowercase.

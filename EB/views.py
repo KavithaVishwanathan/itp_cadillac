@@ -102,7 +102,7 @@ def survivors(requests):
     return render_to_response('EB/chapter_template.html', {'chapters':chapters, 'chapterheading':chapterheading, 'user': requests.user});
 
 def historical(requests):
-    chapters = Chapters.objects.filter(superchapterid = 3)
+    chapters = Chapters.objects.filter(superchapterid = 3).order_by('chaptername')
     chapterheading = Chapters.objects.get(pk = 3)
 
     return render_to_response('EB/chapter_template.html', {'chapters':chapters, 'chapterheading':chapterheading, 'user': requests.user});
@@ -133,7 +133,7 @@ def historicaltemplate(request, sectionorder):
 
     return render_to_response('EB/historicaltemplate.html', {'section': section, 'chapterheading':chapterheading, 'sectionimages':sectionimages, 'totsectionnum':totsectionnum, 'user': request.user});
 
-def cardisplay(request,year):
+def cardisplay(requests,year):
     cars_list = Cardetails.objects.filter(caryear=year).order_by('carnum')
     endindex = Cardetails.objects.count()
     chapid = 'Year '+ str(year)
@@ -172,7 +172,7 @@ def cardisplay(request,year):
 	    minpage = cars.number - 5
 	    maxpage = cars.number + 5
 
-    return render_to_response('EB/car_template.html', { 'cars' : cars, 'chapterheading':chapterheading, 'endindex' : endindex, 'minpage':minpage, 'maxpage':maxpage, 'updateboolean':updateboolean, 'user': request.user}, context_instance=RequestContext(request));
+    return render_to_response('EB/car_template.html', { 'cars' : cars, 'chapterheading':chapterheading, 'endindex' : endindex, 'minpage':minpage, 'maxpage':maxpage, 'updateboolean':updateboolean, 'user': requests.user}, context_instance=RequestContext(request));
 
 def carupdates(request, carnum):
     update_list = Cardetailsupdate.objects.filter(carnum=carnum)
